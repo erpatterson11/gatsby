@@ -10,6 +10,7 @@ exports.DEFAULT_OPTIONS = {
   loading: `lazy`,
   disableBgImageOnAlpha: false,
   disableBgImage: false,
+  checkRootRelativePath: false,
 }
 
 exports.imageClass = `gatsby-resp-image-image`

@@ -130,16 +130,28 @@ module.exports = (
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
     let imagePath
+    let imagePathRelative
     if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
+      imagePathRelative = slash(path.join(getImageInfo(node.url).url))
     } else {
       return null
     }
 
     const imageNode = _.find(files, file => {
-      if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
+      if (file) {
+        if (file.absolutePath && file.absolutePath === imagePath) {
+          return true
+        }
+        if (
+          options.checkRootRelativePath &&
+          file.relativePath &&
+          file.relativePath === imagePathRelative
+        ) {
+          return true
+        }
       }
+
       return null
     })
 
